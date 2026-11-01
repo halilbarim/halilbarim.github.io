@@ -3,10 +3,42 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Halil Barım — AI Agent Builder</title>
-<meta name="description" content="Halil Barım — yapay zeka ajanları kuruyor ve anlatıyor. Agent mimarisi, MCP, Claude Code ve evde çalışan bir AI ikizi: Halo.">
-<meta property="og:title" content="Halil Barım — AI Agent Builder">
-<meta property="og:description" content="Ajanlara iş, yapay zekaya hafıza veriyorum.">
+<title>Halil Barım — Yapay Zeka Ajanları, MCP ve Claude Code</title>
+<meta name="description" content="Halil Barım, yapay zeka ajanları (AI agents) kuruyor ve YouTube'da anlatıyor: agent mimarisi, MCP, Claude Code, agent skill'leri ve evde çalışan AI ikizi Halo.">
+<meta name="author" content="Halil Barım">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#08070c">
+<link rel="canonical" href="https://halilbarim.github.io/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Halil Barım">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:url" content="https://halilbarim.github.io/">
+<meta property="og:title" content="Halil Barım — Yapay Zeka Ajanları, MCP ve Claude Code">
+<meta property="og:description" content="Ajanlara iş, yapay zekaya hafıza veriyorum. AI agent'lar, MCP ve Claude Code üzerine içerikler.">
+<meta property="og:image" content="https://halilbarim.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Halil Barım — Ajanlara iş, yapay zekaya hafıza.">
+<meta property="profile:first_name" content="Halil">
+<meta property="profile:last_name" content="Barım">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@halilbarim">
+<meta name="twitter:creator" content="@halilbarim">
+<meta name="twitter:title" content="Halil Barım — Yapay Zeka Ajanları, MCP ve Claude Code">
+<meta name="twitter:description" content="Ajanlara iş, yapay zekaya hafıza veriyorum.">
+<meta name="twitter:image" content="https://halilbarim.github.io/og.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Person","@id":"https://halilbarim.github.io/#person","name":"Halil Barım","url":"https://halilbarim.github.io/","image":"https://halilbarim.github.io/og.png",
+"jobTitle":"Frontend Developer & AI Agent Builder","description":"Yapay zeka ajanları kuran ve YouTube'da anlatan geliştirici.",
+"knowsAbout":["AI Agents","Yapay Zeka","Model Context Protocol","Claude Code","Agent Skills","Frontend Development"],
+"sameAs":["https://www.youtube.com/@halilbarimdev","https://www.instagram.com/halilbarimdev","https://www.linkedin.com/in/halilbarim","https://github.com/halilbarim","https://www.threads.net/@halilbarimdev","https://x.com/halilbarim","https://medium.com/@halilbarim"]},
+{"@type":"WebSite","@id":"https://halilbarim.github.io/#website","url":"https://halilbarim.github.io/","name":"Halil Barım","inLanguage":"tr-TR","publisher":{"@id":"https://halilbarim.github.io/#person"}},
+{"@type":"ProfilePage","url":"https://halilbarim.github.io/","name":"Halil Barım — Yapay Zeka Ajanları","inLanguage":"tr-TR","mainEntity":{"@id":"https://halilbarim.github.io/#person"}}
+]}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -672,7 +704,7 @@ const vids = [
 ];
 $('#vids').innerHTML = vids.map(([id,t,v,d,big]) => `
   <a class="vid rv${big?' big':''}" href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener">
-    <div class="th"><img loading="lazy" src="https://i.ytimg.com/vi/${id}/${big?'maxresdefault':'hqdefault'}.jpg" alt="" onerror="this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg'"><div class="play"><span>▶</span></div><span class="dur">${d}</span></div>
+    <div class="th"><img loading="lazy" src="https://i.ytimg.com/vi/${id}/${big?'maxresdefault':'hqdefault'}.jpg" alt="${t.replace(/"/g,'&quot;')}" onerror="this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg'"><div class="play"><span>▶</span></div><span class="dur">${d}</span></div>
     <div class="bd"><h4>${t}</h4><div class="st"><span>YouTube</span><b>${v === 'yeni' ? 'yeni video' : v + ' izlenme'}</b></div></div>
   </a>`).join('');
 

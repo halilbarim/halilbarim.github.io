@@ -43,8 +43,8 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
 {"@type":"Person","@id":"https://halilbarim.github.io/#person","name":"Halil Barım","url":"https://halilbarim.github.io/","image":"https://halilbarim.github.io/og.png",
-"jobTitle":"Frontend Developer & AI Agent Builder","description":"Developer who builds AI agents and teaches them on YouTube.",
-"knowsAbout":["AI Agents","Artificial Intelligence","Model Context Protocol","Claude Code","Agent Skills","Frontend Development"],
+"jobTitle":"AI Agent Builder & Software Developer","description":"Developer who builds AI agents and teaches them on YouTube.",
+"knowsAbout":["AI Agents","Artificial Intelligence","Model Context Protocol","Claude Code","Agent Skills","Automation","Software Development"],
 "sameAs":["https://www.youtube.com/@halilbarimdev","https://www.instagram.com/halilbarimdev","https://www.linkedin.com/in/halilbarim","https://github.com/halilbarim","https://www.threads.net/@halilbarimdev","https://x.com/halilbarim","https://medium.com/@halilbarim"]},
 {"@type":"WebSite","@id":"https://halilbarim.github.io/#website","url":"https://halilbarim.github.io/","name":"Halil Barım","inLanguage":["tr-TR","en-US"],"publisher":{"@id":"https://halilbarim.github.io/#person"}},
 {"@type":"ProfilePage","url":"https://halilbarim.github.io/en/","name":"Halil Barım — AI Agents","inLanguage":"en-US","mainEntity":{"@id":"https://halilbarim.github.io/#person"}}
@@ -365,7 +365,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
   <div class="wrap">
     <h1 id="headline">I give agents work, and AI a <em class="serif grad">memory</em>.</h1>
     <div class="hero-foot">
-      <p>I'm Halil, a frontend developer who <b>builds AI agents and teaches how they work</b>: agent architecture, MCP, Claude Code and automation. At home, on my own server, I'm building an AI twin that thinks and remembers.</p>
+      <p>I'm Halil, a software developer who <b>builds AI agents and teaches how they work</b>: agent architecture, MCP, Claude Code and automation. At home, on my own server, I'm building an AI twin that thinks and remembers.</p>
       <div class="btns">
         <a class="btn solid" href="#team">Meet my agent team <span class="arr">→</span></a>
         <a class="btn" href="https://www.youtube.com/@halilbarimdev" target="_blank" rel="noopener">▶ YouTube</a>
@@ -724,10 +724,10 @@ $('#vids').innerHTML = vids.map(([id,t,v,d,big]) => `
 
 /* ================= ASK THE AGENT ================= */
 const qa = [
-  ['What does Halil do?', 'By day he\'s a frontend developer. The rest of the time he <b>builds AI agents and teaches how they work</b>: agent architecture, MCP, Claude Code, automation. These days his agents write most of the code while he leads them.', 'search_memory("career")'],
+  ['What does Halil do?', 'He\'s a software developer who spends most of his time <b>building AI agents and teaching how they work</b>: agent architecture, MCP, Claude Code, automation. These days his agents write most of the code while he leads them.', 'search_memory("career")'],
   ['What is Halo?', 'Me! 👋 I\'m Halil\'s second brain, running on a mini PC in his home. I work as an MCP server; Claude Code, OpenCode and Hermes connect to me and share the same memory. Not a single port is open to the outside, and the data never leaves the house.', 'get_context("halo architecture")'],
   ['Where should I start?', 'His channel is in Turkish, so turn on auto-translated subtitles. Start with <a href="https://www.youtube.com/watch?v=Lo_SLODgckU" target="_blank" rel="noopener">What Are AI Agent Skills?</a>, the most-watched video, then continue with <a href="https://www.youtube.com/watch?v=gHJvguiYSMw" target="_blank" rel="noopener">the first 5 things to set up in Claude Code</a>.', 'recommend(level="beginner")'],
-  ['Which tools does he use?', 'Claude Code (the main agent), OpenCode, agent skills, MCP, Vibe-Kanban, Docker and a mini PC at home. On the frontend: React, React Native and TypeScript.', 'list_tools()'],
+  ['Which tools does he use?', 'Claude Code (the main agent), OpenCode, agent skills, MCP, Vibe-Kanban, Docker and a mini PC at home. For apps: React, React Native and TypeScript.', 'list_tools()'],
   ['How can I work with him?', 'For collaborations, training, talks or content, message him on <a href="https://www.instagram.com/halilbarimdev" target="_blank" rel="noopener">Instagram</a> or <a href="https://www.linkedin.com/in/halilbarim" target="_blank" rel="noopener">LinkedIn</a>. He reads your message himself, not me. For now. 😉', 'route("contact")'],
 ];
 const msgs = $('#msgs'), qs = $('#qs');

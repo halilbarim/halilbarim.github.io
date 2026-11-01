@@ -46,8 +46,8 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@graph":[
 {"@type":"Person","@id":"https://halilbarim.github.io/#person","name":"Halil Barım","url":"https://halilbarim.github.io/","image":"https://halilbarim.github.io/og.png",
-"jobTitle":"Frontend Developer & AI Agent Builder","description":"Yapay zeka ajanları kuran ve YouTube'da anlatan geliştirici.",
-"knowsAbout":["AI Agents","Yapay Zeka","Model Context Protocol","Claude Code","Agent Skills","Frontend Development"],
+"jobTitle":"AI Agent Builder & Software Developer","description":"Yapay zeka ajanları kuran ve YouTube'da anlatan geliştirici.",
+"knowsAbout":["AI Agents","Yapay Zeka","Model Context Protocol","Claude Code","Agent Skills","Automation","Software Development"],
 "sameAs":["https://www.youtube.com/@halilbarimdev","https://www.instagram.com/halilbarimdev","https://www.linkedin.com/in/halilbarim","https://github.com/halilbarim","https://www.threads.net/@halilbarimdev","https://x.com/halilbarim","https://medium.com/@halilbarim"]},
 {"@type":"WebSite","@id":"https://halilbarim.github.io/#website","url":"https://halilbarim.github.io/","name":"Halil Barım","inLanguage":"tr-TR","publisher":{"@id":"https://halilbarim.github.io/#person"}},
 {"@type":"ProfilePage","url":"https://halilbarim.github.io/","name":"Halil Barım — Yapay Zeka Ajanları","inLanguage":"tr-TR","mainEntity":{"@id":"https://halilbarim.github.io/#person"}}
@@ -368,7 +368,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
   <div class="wrap">
     <h1 id="headline">Ajanlara iş, yapay zekaya <em class="serif grad">hafıza</em> veriyorum.</h1>
     <div class="hero-foot">
-      <p>Ben Halil. Frontend geliştiricisiyim ve <b>yapay zeka ajanları kurup anlatıyorum</b>: agent mimarisi, MCP, Claude Code ve otomasyon. Evimde, kendi sunucumda düşünen ve hatırlayan bir AI ikizi inşa ediyorum.</p>
+      <p>Ben Halil. Yazılım geliştiriyor, <b>yapay zeka ajanları kuruyor ve anlatıyorum</b>: agent mimarisi, MCP, Claude Code ve otomasyon. Evimde, kendi sunucumda düşünen ve hatırlayan bir AI ikizi inşa ediyorum.</p>
       <div class="btns">
         <a class="btn solid" href="#team">Ajan ekibimle tanış <span class="arr">→</span></a>
         <a class="btn" href="https://www.youtube.com/@halilbarimdev" target="_blank" rel="noopener">▶ YouTube</a>
@@ -727,10 +727,10 @@ $('#vids').innerHTML = vids.map(([id,t,v,d,big]) => `
 
 /* ================= ASK THE AGENT ================= */
 const qa = [
-  ['Halil ne iş yapıyor?', 'Gündüz frontend geliştiricisi. Geri kalan zamanında <b>yapay zeka ajanları kuruyor ve anlatıyor</b>: agent mimarisi, MCP, Claude Code, otomasyon. Kodun çoğunu artık ajanlarına yazdırıyor, kendisi onları yönetiyor.', 'search_memory("kariyer")'],
+  ['Halil ne iş yapıyor?', 'Yazılım geliştiricisi ve zamanının çoğunu <b>yapay zeka ajanları kurmaya ve anlatmaya</b> ayırıyor: agent mimarisi, MCP, Claude Code, otomasyon. Kodun çoğunu artık ajanlarına yazdırıyor, kendisi onları yönetiyor.', 'search_memory("kariyer")'],
   ['Halo nedir?', 'Ben! 👋 Halil\'in evindeki mini PC\'de çalışan ikinci beyniyim. MCP sunucusu olarak çalışıyorum; Claude Code, OpenCode ve Hermes bana bağlanıp aynı hafızayı paylaşıyor. Dışarıya tek port açık değil, veri evden çıkmıyor.', 'get_context("halo mimarisi")'],
   ['Nereden başlamalıyım?', 'Önce şu videoyu izle: <a href="https://www.youtube.com/watch?v=Lo_SLODgckU" target="_blank" rel="noopener">AI Agent Skills Nedir?</a> Kanalın en çok izleneni. Sonra <a href="https://www.youtube.com/watch?v=gHJvguiYSMw" target="_blank" rel="noopener">Claude Code\'da ilk kuracağın 5 şey</a> ile devam et.', 'recommend(level="başlangıç")'],
-  ['Hangi araçları kullanıyor?', 'Claude Code (ana ajan), OpenCode, agent skill\'leri, MCP, Vibe-Kanban, Docker ve evde bir mini PC. Frontend tarafında React, React Native ve TypeScript.', 'list_tools()'],
+  ['Hangi araçları kullanıyor?', 'Claude Code (ana ajan), OpenCode, agent skill\'leri, MCP, Vibe-Kanban, Docker ve evde bir mini PC. Uygulama tarafında React, React Native ve TypeScript.', 'list_tools()'],
   ['Onunla nasıl çalışırım?', 'İş birliği, eğitim, konuşma ya da içerik için <a href="https://www.instagram.com/halilbarimdev" target="_blank" rel="noopener">Instagram</a> veya <a href="https://www.linkedin.com/in/halilbarim" target="_blank" rel="noopener">LinkedIn</a> üzerinden yazabilirsin. Mesajını ben değil, kendisi okuyor. Şimdilik. 😉', 'route("iletişim")'],
 ];
 const msgs = $('#msgs'), qs = $('#qs');

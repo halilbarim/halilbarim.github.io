@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Halil Barım — AI Agents, MCP & Claude Code</title>
+<meta name="description" content="Halil Barım builds AI agents and teaches them on YouTube: agent architecture, MCP, Claude Code, agent skills and Halo, an AI twin that runs on a home server.">
+<meta name="author" content="Halil Barım">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#08070c">
+<link rel="canonical" href="https://halilbarim.github.io/en/">
+<link rel="alternate" hreflang="tr" href="https://halilbarim.github.io/">
+<link rel="alternate" hreflang="en" href="https://halilbarim.github.io/en/">
+<link rel="alternate" hreflang="x-default" href="https://halilbarim.github.io/">
+<script>
+/* language routing: an explicit Turkish choice sends the visitor back to / */
+(function(){
+  var pick = null; try { pick = localStorage.getItem('hb-lang'); } catch (e) {}
+  if (pick === 'tr') location.replace('../' + location.hash);
+})();
+</script>
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Halil Barım">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="tr_TR">
+<meta property="og:url" content="https://halilbarim.github.io/en/">
+<meta property="og:title" content="Halil Barım — AI Agents, MCP & Claude Code">
+<meta property="og:description" content="I give agents work, and AI a memory. Content on AI agents, MCP and Claude Code.">
+<meta property="og:image" content="https://halilbarim.github.io/og-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Halil Barım — Agents get work, AI gets memory.">
+<meta property="profile:first_name" content="Halil">
+<meta property="profile:last_name" content="Barım">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@halilbarim">
+<meta name="twitter:creator" content="@halilbarim">
+<meta name="twitter:title" content="Halil Barım — AI Agents, MCP & Claude Code">
+<meta name="twitter:description" content="I give agents work, and AI a memory.">
+<meta name="twitter:image" content="https://halilbarim.github.io/og-en.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[
+{"@type":"Person","@id":"https://halilbarim.github.io/#person","name":"Halil Barım","url":"https://halilbarim.github.io/","image":"https://halilbarim.github.io/og.png",
+"jobTitle":"Frontend Developer & AI Agent Builder","description":"Developer who builds AI agents and teaches them on YouTube.",
+"knowsAbout":["AI Agents","Artificial Intelligence","Model Context Protocol","Claude Code","Agent Skills","Frontend Development"],
+"sameAs":["https://www.youtube.com/@halilbarimdev","https://www.instagram.com/halilbarimdev","https://www.linkedin.com/in/halilbarim","https://github.com/halilbarim","https://www.threads.net/@halilbarimdev","https://x.com/halilbarim","https://medium.com/@halilbarim"]},
+{"@type":"WebSite","@id":"https://halilbarim.github.io/#website","url":"https://halilbarim.github.io/","name":"Halil Barım","inLanguage":["tr-TR","en-US"],"publisher":{"@id":"https://halilbarim.github.io/#person"}},
+{"@type":"ProfilePage","url":"https://halilbarim.github.io/en/","name":"Halil Barım — AI Agents","inLanguage":"en-US","mainEntity":{"@id":"https://halilbarim.github.io/#person"}}
+]}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#08070c;
+  --ink-2:#0f0d16;
+  --card:rgba(255,255,255,.035);
+  --card-hi:rgba(255,255,255,.06);
+  --line:rgba(255,240,225,.09);
+  --line-hi:rgba(255,200,150,.28);
+  --text:#f4efe7;
+  --muted:#8f8a98;
+  --dim:#5c5866;
+  --amber:#ffb36b;
+  --flare:#ff6a3d;
+  --violet:#a98bff;
+  --halo:linear-gradient(100deg,#ffd29a 0%,#ff8a4c 38%,#e0507a 66%,#a98bff 100%);
+  --serif:'Instrument Serif',Georgia,serif;
+  --sans:'Manrope',system-ui,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--text);font-family:var(--sans);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--amber);color:var(--ink)}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* grain */
+body::before{content:'';position:fixed;inset:-50%;z-index:100;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grain 1.2s steps(6) infinite}
+@keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}40%{transform:translate(3%,-5%)}60%{transform:translate(-2%,4%)}80%{transform:translate(5%,2%)}100%{transform:translate(0,0)}}
+
+.wrap{max-width:1320px;margin:0 auto;padding:0 clamp(16px,5vw,72px)}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.grad{background:var(--halo);-webkit-background-clip:text;background-clip:text;color:transparent}
+.serif{font-family:var(--serif);font-weight:400}
+em.serif{font-style:italic}
+
+/* ---------- nav ---------- */
+nav{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:60;display:flex;align-items:center;gap:6px;
+  padding:6px;border:1px solid var(--line);border-radius:99px;background:rgba(12,10,18,.6);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4)}
+nav .me{white-space:nowrap;display:flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;font-weight:600;font-size:14px}
+nav .me i{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 50% 50%,var(--ink) 52%,transparent 54%),conic-gradient(from 200deg,#ffd29a,#ff8a4c,#e0507a,#a98bff,#ffd29a);
+  box-shadow:0 0 18px rgba(255,138,76,.5);animation:rot 8s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+nav a.l{font-size:13px;color:var(--muted);padding:8px 14px;border-radius:99px;transition:.25s}
+nav a.l:hover{color:var(--text);background:var(--card-hi)}
+nav a.lang{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);padding:7px 11px;border:1px solid var(--line);border-radius:99px;margin-right:2px;transition:.25s}
+nav a.lang:hover{color:var(--text);border-color:var(--line-hi)}
+nav a.cta{font-size:13px;font-weight:600;background:var(--text);color:var(--ink);padding:9px 18px;border-radius:99px;transition:.25s}
+nav a.cta:hover{background:var(--amber)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100vh;min-height:100svh;display:flex;align-items:flex-end;padding-bottom:clamp(40px,8vh,90px);overflow:hidden}
+#eclipse{position:absolute;inset:0;width:100%;height:100%}
+.hero .wrap{position:relative;z-index:2;width:100%}
+.hero .hero-top{position:absolute;top:110px;left:0;right:0;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.live{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--line);background:rgba(12,10,18,.5);backdrop-filter:blur(10px);
+  padding:8px 14px;border-radius:99px;font-size:12.5px;color:var(--muted)}
+.live b{color:var(--text);font-weight:500}
+.live i{width:7px;height:7px;border-radius:50%;background:#5dffa0;box-shadow:0 0 0 0 rgba(93,255,160,.6);animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 8px rgba(93,255,160,0)}100%{box-shadow:0 0 0 0 rgba(93,255,160,0)}}
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(54px,9.4vw,152px);line-height:.92;letter-spacing:-.025em;max-width:13ch}
+h1 .w{display:inline-block;opacity:0;transform:translateY(40%);filter:blur(10px);animation:wIn 1.1s cubic-bezier(.2,.7,.2,1) forwards}
+@keyframes wIn{to{opacity:1;transform:none;filter:none}}
+.hero-foot{display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end;margin-top:36px;padding-top:28px;border-top:1px solid var(--line)}
+.hero-foot p{max-width:520px;color:#bdb6c6;font-size:16.5px}
+.hero-foot p b{color:var(--text);font-weight:600}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:99px;font-size:14px;font-weight:600;border:1px solid var(--line-hi);transition:.3s;position:relative;overflow:hidden}
+.btn:hover{border-color:var(--amber);transform:translateY(-2px)}
+.btn.solid{background:var(--halo);color:#1a0d08;border:0;box-shadow:0 10px 40px -10px rgba(255,120,70,.6)}
+.btn.solid:hover{box-shadow:0 14px 50px -8px rgba(255,120,70,.8)}
+.btn .arr{transition:transform .3s}
+.btn:hover .arr{transform:translateX(4px)}
+
+/* ---------- manifesto ---------- */
+.manifesto{padding:clamp(120px,20vh,220px) 0}
+.manifesto p{font-family:var(--serif);font-size:clamp(34px,5.2vw,78px);line-height:1.08;letter-spacing:-.02em;max-width:1150px}
+.manifesto .word{color:rgba(244,239,231,.12);transition:color .5s}
+.manifesto .word.on{color:var(--text)}
+.manifesto .word.hl.on{background:var(--halo);-webkit-background-clip:text;background-clip:text;color:transparent;font-style:italic}
+.manifesto .sig{margin-top:40px;display:flex;align-items:center;gap:14px}
+.manifesto .sig::before{content:'';width:40px;height:1px;background:var(--line-hi)}
+
+/* ---------- section head ---------- */
+.sh{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:48px;flex-wrap:wrap}
+.sh h2{font-family:var(--serif);font-weight:400;font-size:clamp(42px,6vw,88px);line-height:.95;letter-spacing:-.02em}
+.sh p{max-width:420px;color:var(--muted);font-size:15px}
+.sh .mono{display:block;margin-bottom:18px}
+section{padding:clamp(70px,11vh,130px) 0}
+
+/* ---------- agent team ---------- */
+.team{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.agent{position:relative;border:1px solid var(--line);background:var(--card);border-radius:22px;padding:22px;min-height:340px;display:flex;flex-direction:column;
+  overflow:hidden;transition:transform .5s cubic-bezier(.2,.7,.2,1),border-color .4s}
+.agent::before{content:'';position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:var(--halo);opacity:0;transition:opacity .4s;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.agent:hover{transform:translateY(-8px)}
+.agent:hover::before{opacity:1}
+.agent .glow{position:absolute;width:260px;height:260px;border-radius:50%;top:-130px;right:-110px;filter:blur(40px);opacity:.35;transition:opacity .4s}
+.agent:hover .glow{opacity:.65}
+.agent .head{display:flex;justify-content:space-between;align-items:center;position:relative}
+.agent .badge{font-family:var(--mono);font-size:10.5px;padding:4px 9px;border-radius:99px;border:1px solid var(--line);color:var(--muted);display:flex;align-items:center;gap:6px}
+.agent .badge i{width:6px;height:6px;border-radius:50%}
+.agent .orb{width:64px;height:64px;border-radius:50%;margin:34px 0 26px;position:relative}
+.agent .orb::after{content:'';position:absolute;inset:8px;border-radius:50%;background:var(--ink)}
+.agent h3{font-family:var(--serif);font-weight:400;font-size:32px;line-height:1;margin-bottom:6px}
+.agent .role{font-size:12.5px;color:var(--amber);font-weight:600;margin-bottom:12px}
+.agent p{font-size:13.5px;color:var(--muted);flex:1}
+.agent .meta{font-family:var(--mono);font-size:10.5px;color:var(--dim);margin-top:18px;padding-top:14px;border-top:1px dashed var(--line);display:flex;justify-content:space-between}
+
+/* ---------- numbers ---------- */
+.numbers{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.numbers div{padding:40px 24px;border-right:1px solid var(--line)}
+.numbers div:last-child{border-right:0}
+.numbers .n{font-family:var(--serif);font-size:clamp(46px,5vw,76px);line-height:1;letter-spacing:-.02em}
+.numbers .n sup{font-size:.4em;vertical-align:top;margin-left:2px;color:var(--amber)}
+.numbers .t{font-size:13px;color:var(--muted);margin-top:10px}
+
+/* ---------- halo explainer ---------- */
+.halo-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(30px,5vw,80px);align-items:center}
+.flow{position:relative;border:1px solid var(--line);border-radius:28px;background:radial-gradient(ellipse at 50% 0%,rgba(255,138,76,.10),transparent 60%),var(--card);padding:30px;aspect-ratio:1/1.02}
+.flow svg{width:100%;height:100%}
+.flow .ring{fill:none;stroke:url(#hg);stroke-width:1.5}
+.flow .path{fill:none;stroke:rgba(255,240,225,.14);stroke-width:1}
+.flow .dot{fill:#ffd29a}
+.flow text{font-family:var(--sans);fill:var(--text);font-size:13px;font-weight:600;text-anchor:middle}
+.flow text.s{fill:var(--muted);font-size:10px;font-weight:400;font-family:var(--mono)}
+.flow .n-bg{fill:#13101b;stroke:var(--line);stroke-width:1}
+.facts{display:flex;flex-direction:column;gap:2px}
+.fact{display:grid;grid-template-columns:46px 1fr;gap:16px;padding:22px 0;border-bottom:1px solid var(--line)}
+.fact:first-child{border-top:1px solid var(--line)}
+.fact .k{font-family:var(--mono);font-size:12px;color:var(--amber);padding-top:5px}
+.fact h4{font-size:18px;font-weight:600;margin-bottom:4px}
+.fact p{font-size:14px;color:var(--muted)}
+
+/* ---------- work ---------- */
+.work a{display:grid;grid-template-columns:70px 1.1fr 1.4fr 120px;gap:24px;align-items:center;padding:30px 0;border-bottom:1px solid var(--line);position:relative;transition:padding .4s}
+.work a:first-child{border-top:1px solid var(--line)}
+.work a::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:1px;background:var(--halo);transform:scaleX(0);transform-origin:left;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.work a:hover::after{transform:scaleX(1)}
+.work a:hover{padding-left:14px}
+.work .i{font-family:var(--mono);font-size:12px;color:var(--dim)}
+.work h3{font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.4vw,48px);line-height:1;letter-spacing:-.01em;transition:.3s}
+.work a:hover h3{font-style:italic}
+.work p{font-size:14px;color:var(--muted)}
+.work .tg{text-align:right;font-family:var(--mono);font-size:11px;color:var(--muted)}
+.work .tg b{display:block;color:var(--text);font-size:13px;font-weight:500}
+
+/* ---------- videos ---------- */
+.vids{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.vid{border-radius:20px;overflow:hidden;border:1px solid var(--line);background:var(--card);transition:transform .5s cubic-bezier(.2,.7,.2,1),border-color .4s;display:flex;flex-direction:column}
+.vid:hover{transform:translateY(-6px);border-color:var(--line-hi)}
+.vid .th{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--ink-2)}
+.vid .th img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .5s;filter:saturate(.85)}
+.vid:hover .th img{transform:scale(1.06);filter:saturate(1.1)}
+.vid .th .play{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transition:.35s;background:rgba(8,7,12,.35)}
+.vid:hover .th .play{opacity:1}
+.vid .th .play span{width:58px;height:58px;border-radius:50%;background:var(--halo);display:grid;place-items:center;color:#1a0d08;font-size:18px;padding-left:3px}
+.vid .th .dur{position:absolute;right:10px;bottom:10px;font-family:var(--mono);font-size:11px;background:rgba(0,0,0,.7);padding:3px 7px;border-radius:6px}
+.vid .bd{padding:18px 20px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.vid h4{font-size:16px;font-weight:600;line-height:1.35;flex:1}
+.vid .st{font-family:var(--mono);font-size:11px;color:var(--muted);display:flex;justify-content:space-between}
+.vid .st b{color:var(--amber);font-weight:500}
+.vid.big{grid-column:span 2;grid-row:span 2}
+.vid.big h4{font-family:var(--serif);font-weight:400;font-size:clamp(26px,2.6vw,38px);line-height:1.08}
+
+/* ---------- ask the agent ---------- */
+.ask{display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(30px,5vw,80px);align-items:start}
+.chat{border:1px solid var(--line);border-radius:28px;background:var(--card);overflow:hidden;display:flex;flex-direction:column;height:520px}
+.chat-head{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.chat-head .av{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle,var(--ink) 50%,transparent 52%),conic-gradient(#ffd29a,#ff8a4c,#e0507a,#a98bff,#ffd29a);animation:rot 6s linear infinite}
+.chat-head b{font-size:14px;display:block;line-height:1.2}
+.chat-head small{font-size:11.5px;color:#5dffa0}
+.msgs{flex:1;overflow-y:auto;padding:22px 20px;display:flex;flex-direction:column;gap:12px;scroll-behavior:smooth}
+.msgs::-webkit-scrollbar{width:5px}.msgs::-webkit-scrollbar-thumb{background:var(--line-hi);border-radius:9px}
+.m{max-width:84%;padding:12px 16px;border-radius:18px;font-size:14px;line-height:1.55;animation:mIn .4s cubic-bezier(.2,.7,.2,1)}
+@keyframes mIn{from{opacity:0;transform:translateY(8px)}}
+.m.bot{background:var(--card-hi);border:1px solid var(--line);border-bottom-left-radius:6px;align-self:flex-start}
+.m.me{background:var(--halo);color:#1a0d08;font-weight:500;border-bottom-right-radius:6px;align-self:flex-end}
+.m.bot a{color:var(--amber);text-decoration:underline;text-underline-offset:3px}
+.m .tool{display:block;font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:6px}
+.typing{display:inline-flex;gap:4px}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--muted);animation:bob 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes bob{50%{transform:translateY(-4px);opacity:.4}}
+.qs{display:flex;flex-wrap:wrap;gap:8px;padding:14px 20px 18px;border-top:1px solid var(--line)}
+.qs button{font:inherit;font-size:13px;color:var(--text);background:transparent;border:1px solid var(--line-hi);padding:8px 14px;border-radius:99px;cursor:pointer;transition:.25s}
+.qs button:hover{background:var(--text);color:var(--ink)}
+.qs button:disabled{opacity:.35;pointer-events:none}
+
+/* ---------- contact ---------- */
+.contact{text-align:center;padding:clamp(120px,18vh,200px) 0 80px;position:relative;overflow:hidden}
+.contact::before{content:'';position:absolute;left:50%;top:58%;width:min(1100px,140vw);aspect-ratio:1;transform:translate(-50%,-10%);border-radius:50%;
+  background:radial-gradient(circle,var(--ink) 47%,transparent 48.5%),conic-gradient(from 0deg,#ffd29a,#ff8a4c,#e0507a,#a98bff,#ffd29a);filter:blur(28px);opacity:.55;z-index:-1;animation:rot 30s linear infinite}
+.contact h2{font-family:var(--serif);font-weight:400;font-size:clamp(56px,10vw,160px);line-height:.9;letter-spacing:-.03em;margin:22px 0 28px}
+.contact p{color:var(--muted);max-width:520px;margin:0 auto 44px}
+.soc{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;max-width:900px;margin:0 auto}
+.soc a{display:flex;align-items:center;gap:10px;padding:12px 18px;border:1px solid var(--line);border-radius:99px;background:rgba(12,10,18,.55);backdrop-filter:blur(12px);font-size:14px;transition:.3s}
+.soc a svg{width:17px;height:17px;fill:currentColor}
+.soc a small{color:var(--muted);font-size:12px}
+.soc a:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-3px)}
+
+footer{border-top:1px solid var(--line);padding:26px 0;font-size:13px;color:var(--muted)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+
+/* ---------- pipeline (self-running board) ---------- */
+.pipe-wrap{overflow-x:auto;padding-bottom:8px;scrollbar-width:thin;scrollbar-color:var(--line-hi) transparent}
+.pipe{display:grid;grid-template-columns:repeat(5,minmax(210px,1fr));gap:12px;min-width:1080px}
+.col{border:1px solid var(--line);background:var(--card);border-radius:22px;padding:12px;min-height:380px}
+.col-h{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 8px 14px}
+.col-h b{font-family:var(--serif);font-weight:400;font-size:22px;line-height:1}
+.col-h .who{font-family:var(--mono);font-size:10.5px;color:var(--muted);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.col-h .who i{width:6px;height:6px;border-radius:50%;background:var(--muted)}
+.col.agentic .col-h .who i{background:#5dffa0;box-shadow:0 0 8px #5dffa0}
+.col.human{position:relative;background:linear-gradient(180deg,rgba(255,138,76,.10),rgba(169,139,255,.05));border-color:transparent}
+.col.human::before{content:'';position:absolute;inset:-1px;border-radius:inherit;padding:1px;background:var(--halo);pointer-events:none;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.col.human .col-h .who{color:var(--amber)}
+.col.human .col-h .who i{background:var(--amber);box-shadow:0 0 8px var(--amber)}
+.tcard{background:#14111c;border:1px solid var(--line);border-radius:14px;padding:13px 14px;margin-bottom:8px;font-size:13.5px;font-weight:500;line-height:1.38}
+.tcard .meta{display:flex;justify-content:space-between;margin-top:10px;font-family:var(--mono);font-size:10.5px;color:var(--dim)}
+.tcard .prog{height:3px;background:rgba(255,255,255,.06);border-radius:3px;margin-top:10px;overflow:hidden}
+.tcard .prog i{display:block;height:100%;background:var(--halo);border-radius:3px}
+.tcard.moving{box-shadow:0 20px 40px -14px rgba(255,120,70,.45);border-color:var(--line-hi);position:relative;z-index:5}
+.tcard.done{opacity:.5}
+.tcard.done .prog i{background:#5dffa0}
+.pipe-log{margin-top:18px;font-family:var(--mono);font-size:12px;color:var(--muted);display:flex;gap:10px;align-items:center;min-height:20px}
+.pipe-log i{width:7px;height:7px;border-radius:50%;background:#5dffa0;box-shadow:0 0 8px #5dffa0;flex-shrink:0}
+.pipe-log span{color:#bdb6c6}
+
+/* ---------- hidden matrix mode ---------- */
+#neo{position:fixed;inset:0;z-index:300;pointer-events:none;opacity:0;transition:opacity .6s}
+#neo.on{opacity:1;pointer-events:auto}
+#neo canvas{position:absolute;inset:0;width:100%;height:100%;background:#020604}
+#neo .msg{position:absolute;inset:0;display:grid;place-content:center;text-align:center;gap:14px;font-family:var(--mono);color:#00ff8c;
+  text-shadow:0 0 18px rgba(0,255,140,.7);background:radial-gradient(ellipse 420px 160px at center,rgba(2,6,4,.92),rgba(2,6,4,.6) 60%,transparent)}
+#neo .msg b{font-size:clamp(26px,4.4vw,56px);font-weight:500;letter-spacing:-.01em}
+#neo .msg small{font-size:13px;color:#7dffbf;opacity:.8}
+#neo .msg .k{display:inline-block;width:.55em;height:1em;background:#00ff8c;vertical-align:-4px;margin-left:4px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.pill{font:inherit;font-size:13px;color:var(--muted);background:none;border:0;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:color .25s}
+.pill i{width:14px;height:7px;border-radius:99px;background:linear-gradient(90deg,#ff3d5a 50%,#3da5ff 50%)}
+.pill:hover{color:#00ff8c}
+
+.rv{opacity:0;transform:translateY(40px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:1100px){
+  .team{grid-template-columns:repeat(2,1fr)}
+  .team .agent:last-child{grid-column:span 2;min-height:auto}
+  .numbers{grid-template-columns:repeat(3,1fr)}
+  .numbers div:nth-child(3){border-right:0}
+  .numbers div:nth-child(n+4){border-top:1px solid var(--line)}
+}
+@media (max-width:900px){
+  nav a.l{display:none}
+  .halo-grid,.ask{grid-template-columns:1fr}
+  .vids{grid-template-columns:1fr 1fr}
+  .vid.big{grid-column:span 2;grid-row:auto}
+  .work a{grid-template-columns:40px 1fr;gap:6px 16px}
+  .work p{grid-column:2}
+  .work .tg{grid-column:2;text-align:left}
+  .work .tg b{display:inline;margin-right:8px}
+  .hero-foot{grid-template-columns:1fr}
+}
+@media (max-width:600px){
+  .team{grid-template-columns:1fr}
+  .team .agent:last-child{grid-column:auto}
+  .agent{min-height:auto}
+  .numbers{grid-template-columns:1fr 1fr}
+  .numbers div{border-right:1px solid var(--line)!important;border-top:1px solid var(--line);padding:28px 16px}
+  .numbers div:nth-child(2n){border-right:0!important}
+  .numbers div:nth-child(-n+2){border-top:0}
+  .numbers div:last-child{grid-column:span 2;border-right:0!important}
+  .vids{grid-template-columns:1fr}
+  .vid.big{grid-column:auto}
+  .hero .hero-top{top:84px}
+  .chat{height:540px}
+  .qs{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none}
+  .qs button{white-space:nowrap;flex-shrink:0}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  h1 .w{opacity:1;transform:none;filter:none}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#top" class="me"><i></i>Halil Barım</a>
+  <a class="l" href="#team">Agents</a>
+  <a class="l" href="#halo">Halo</a>
+  <a class="l" href="#work">Projects</a>
+  <a class="l" href="#videos">Videos</a>
+  <a class="lang" href="../" hreflang="tr" lang="tr" title="Türkçe" data-lang="tr">TR</a>
+  <a class="cta" href="#contact">Contact</a>
+</nav>
+
+<header class="hero" id="top">
+  <canvas id="eclipse" aria-hidden="true"></canvas>
+  <div class="hero-top wrap">
+    <span class="live"><i></i>Now: <b>building Halo Agent</b></span>
+    <span class="mono" style="align-self:center">AI Agent Builder · Denizli, Türkiye</span>
+  </div>
+  <div class="wrap">
+    <h1 id="headline">I give agents work, and AI a <em class="serif grad">memory</em>.</h1>
+    <div class="hero-foot">
+      <p>I'm Halil, a frontend developer who <b>builds AI agents and teaches how they work</b>: agent architecture, MCP, Claude Code and automation. At home, on my own server, I'm building an AI twin that thinks and remembers.</p>
+      <div class="btns">
+        <a class="btn solid" href="#team">Meet my agent team <span class="arr">→</span></a>
+        <a class="btn" href="https://www.youtube.com/@halilbarimdev" target="_blank" rel="noopener">▶ YouTube</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- MANIFESTO -->
+  <div class="manifesto wrap">
+    <span class="mono">Manifesto</span>
+    <p id="manifesto" style="margin-top:24px">I don't write most of the code anymore. My *agents* do. My job is to teach them what to do, what to *remember*, and what they must never do. The future won't belong to developers who use agents, but to developers who *lead* them.</p>
+    <div class="sig mono">Halil Barım</div>
+  </div>
+
+  <!-- TEAM -->
+  <section id="team">
+    <div class="wrap">
+      <div class="sh rv">
+        <div><span class="mono">01 · My agent team</span><h2>Not a one-man band,<br><em class="serif">a one-human</em> team.</h2></div>
+        <p>The AI team I work with every day. Some are live, some are still being built. All of them share the same brain.</p>
+      </div>
+      <div class="team">
+        <article class="agent rv">
+          <div class="glow" style="background:#ff8a4c"></div>
+          <div class="head"><span class="mono">ID-001</span><span class="badge"><i style="background:#5dffa0"></i>live</span></div>
+          <div class="orb" style="background:conic-gradient(#ffd29a,#ff8a4c,#ffd29a)"></div>
+          <h3>Halo Brain</h3>
+          <div class="role">Memory · MCP server</div>
+          <p>My semantic second brain. It remembers my notes, decisions and projects. Every other agent consults it.</p>
+          <div class="meta"><span>vault: 2</span><span>home-server</span></div>
+        </article>
+        <article class="agent rv">
+          <div class="glow" style="background:#e0507a"></div>
+          <div class="head"><span class="mono">ID-002</span><span class="badge"><i style="background:#5dffa0"></i>live</span></div>
+          <div class="orb" style="background:conic-gradient(#ff8a4c,#e0507a,#ff8a4c)"></div>
+          <h3>Claude Code</h3>
+          <div class="role">The coder · lead developer</div>
+          <p>It writes most of the code. Skills and AGENTS.md teach it to work the way I do.</p>
+          <div class="meta"><span>skills: active</span><span>terminal</span></div>
+        </article>
+        <article class="agent rv">
+          <div class="glow" style="background:#a98bff"></div>
+          <div class="head"><span class="mono">ID-003</span><span class="badge"><i style="background:#5dffa0"></i>live</span></div>
+          <div class="orb" style="background:conic-gradient(#e0507a,#a98bff,#e0507a)"></div>
+          <h3>Hermes</h3>
+          <div class="role">Messenger · Telegram bridge</div>
+          <p>The agent in my pocket. It lets me talk to my twin without exposing the server or opening a single port.</p>
+          <div class="meta"><span>open-source</span><span>telegram</span></div>
+        </article>
+        <article class="agent rv">
+          <div class="glow" style="background:#ffd29a"></div>
+          <div class="head"><span class="mono">ID-004</span><span class="badge"><i style="background:#ffb36b"></i>in progress</span></div>
+          <div class="orb" style="background:conic-gradient(#a98bff,#ffd29a,#a98bff)"></div>
+          <h3>Halo Agent</h3>
+          <div class="role">Conductor · pipelines</div>
+          <p>My own agent that will run all coding and agentic work. Automations, pipelines, skills.</p>
+          <div class="meta"><span>v0.x</span><span>soon</span></div>
+        </article>
+        <article class="agent rv">
+          <div class="glow" style="background:#6b6680"></div>
+          <div class="head"><span class="mono">ID-005</span><span class="badge"><i style="background:#6b6680"></i>vision</span></div>
+          <div class="orb" style="background:conic-gradient(#3a3646,#8f8a98,#3a3646)"></div>
+          <h3>Jarvis</h3>
+          <div class="role">Voice · interface</div>
+          <p>A voice interface in the browser that sits on top of the whole system. The series finale.</p>
+          <div class="meta"><span>planned</span><span>2027</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIPELINE -->
+  <section id="pipeline" style="padding-top:0">
+    <div class="wrap">
+      <div class="sh rv">
+        <div><span class="mono">01 · The team at work</span><h2>Agents do the work,<br>a <em class="serif grad">human</em> signs off.</h2></div>
+        <p>A typical workflow of mine: Halo recalls the context and plans, Claude Code writes the code, and I have the final say. This board runs on its own; watch it for a moment.</p>
+      </div>
+      <div class="pipe-wrap rv"><div class="pipe" id="pipe"></div></div>
+      <div class="pipe-log"><i></i><span id="plog">starting pipeline…</span></div>
+    </div>
+  </section>
+
+  <!-- NUMBERS -->
+  <div class="wrap rv">
+    <div class="numbers">
+      <div><div class="n" data-to="50.8" data-dec="1">0<sup>K</sup></div><div class="t">YouTube views</div></div>
+      <div><div class="n" data-to="835">0</div><div class="t">Instagram followers</div></div>
+      <div><div class="n" data-to="749">0</div><div class="t">YouTube subscribers</div></div>
+      <div><div class="n" data-to="57">0</div><div class="t">videos published</div></div>
+      <div><div class="n" data-to="48">0<sup>★</sup></div><div class="t">vibe-stack GitHub stars</div></div>
+    </div>
+  </div>
+
+  <!-- HALO -->
+  <section id="halo">
+    <div class="wrap halo-grid">
+      <div class="flow rv">
+        <svg viewBox="0 0 500 500" aria-label="Halo architecture">
+          <defs>
+            <linearGradient id="hg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd29a"/><stop offset=".45" stop-color="#ff8a4c"/><stop offset=".75" stop-color="#e0507a"/><stop offset="1" stop-color="#a98bff"/></linearGradient>
+            <radialGradient id="core"><stop offset=".6" stop-color="#08070c"/><stop offset=".72" stop-color="#ff8a4c" stop-opacity=".55"/><stop offset="1" stop-color="#ff8a4c" stop-opacity="0"/></radialGradient>
+          </defs>
+          <g id="flowPaths"></g>
+          <circle cx="250" cy="250" r="92" fill="url(#core)"/>
+          <circle class="ring" cx="250" cy="250" r="62"/>
+          <text x="250" y="248" style="font-family:'Instrument Serif';font-size:30px;font-weight:400">Halo</text>
+          <text class="s" x="250" y="268">second brain</text>
+          <g id="flowNodes"></g>
+        </svg>
+      </div>
+      <div class="rv">
+        <span class="mono">02 · Project: Halo</span>
+        <h2 class="serif" style="font-size:clamp(42px,5.6vw,80px);line-height:.95;letter-spacing:-.02em;margin:18px 0 22px">An <em class="grad">AI twin</em><br>lives in my home.</h2>
+        <p style="color:var(--muted);margin-bottom:30px;max-width:480px">Every AI tool I use is wired to the same memory. Whichever model I talk to, it knows me.</p>
+        <div class="facts">
+          <div class="fact"><span class="k">01</span><div><h4>One brain, many agents</h4><p>Claude Code, OpenCode and Hermes all connect to the same MCP server.</p></div></div>
+          <div class="fact"><span class="k">02</span><div><h4>Data never leaves home</h4><p>Runs on a mini PC, local network only. Open ports: zero.</p></div></div>
+          <div class="fact"><span class="k">03</span><div><h4>Partitioned memory</h4><p>Work and personal vaults are kept apart. Nothing personal goes to an outside service.</p></div></div>
+        </div>
+        <div class="btns" style="margin-top:30px"><a class="btn" href="https://www.youtube.com/watch?v=BEkHlTcq8xo" target="_blank" rel="noopener">Watch how I built it (in Turkish) <span class="arr">→</span></a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <div class="wrap">
+      <div class="sh rv">
+        <div><span class="mono">03 · Open source</span><h2>Tools<br><em class="serif">for agents.</em></h2></div>
+        <p>I built them because my own workflow needed them, and shared them once they proved useful.</p>
+      </div>
+      <div class="work rv">
+        <a href="https://github.com/halilbarim/vibe-stack" target="_blank" rel="noopener">
+          <span class="i">01</span><h3>vibe-stack</h3>
+          <p>A Docker setup for AI-assisted coding with Vibe-Kanban + Claude Code. Secure secrets, VS Code in the browser, up with a single command.</p>
+          <span class="tg"><b>★ 48 · 8 fork</b>Shell · Docker</span>
+        </a>
+        <a href="https://github.com/halilbarim/hbm-skills" target="_blank" rel="noopener">
+          <span class="i">02</span><h3>hbm-skills</h3>
+          <p>A skill collection for AI coding agents. The memory-bank skill lets an agent remember project knowledge across sessions.</p>
+          <span class="tg"><b>skills.sh</b>Claude Code · Cursor · Cline</span>
+        </a>
+        <a href="https://github.com/halilbarim/mobile-app-boilerplate" target="_blank" rel="noopener">
+          <span class="i">03</span><h3>mobile-app-boilerplate</h3>
+          <p>An Expo-based mobile app template. With AGENT-README, agents understand the project from minute one.</p>
+          <span class="tg"><b>Expo</b>TypeScript</span>
+        </a>
+        <a href="https://medium.com/@halilbarim" target="_blank" rel="noopener">
+          <span class="i">04</span><h3>Writing</h3>
+          <p>Articles on Medium about agent skills, AI and software, mostly in Turkish. I also write for the TurkNet Technology publication.</p>
+          <span class="tg"><b>Medium</b>@halilbarim</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIDEOS -->
+  <section id="videos">
+    <div class="wrap">
+      <div class="sh rv">
+        <div><span class="mono">04 · YouTube</span><h2>In Turkish, hands-on,<br>with demos that <em class="serif">actually work.</em></h2></div>
+        <p>My channel is in Turkish: I teach Claude Code, MCP and coding with AI. Every video gives you one thing you can apply today.</p>
+      </div>
+      <div class="vids" id="vids"></div>
+      <div class="btns rv" style="margin-top:36px;justify-content:center"><a class="btn solid" href="https://www.youtube.com/@halilbarimdev?sub_confirmation=1" target="_blank" rel="noopener">Subscribe to the channel <span class="arr">→</span></a></div>
+    </div>
+  </section>
+
+  <!-- ASK -->
+  <section id="ask">
+    <div class="wrap ask">
+      <div class="rv">
+        <span class="mono">05 · Ask my agent</span>
+        <h2 class="serif" style="font-size:clamp(42px,5.6vw,80px);line-height:.95;letter-spacing:-.02em;margin:18px 0 22px">Let it answer<br><em class="grad">for me.</em></h2>
+        <p style="color:var(--muted);max-width:440px">This little agent knows me better than I do. Pick a question and watch the answer. A tiny, browser-sized rehearsal of the real Halo.</p>
+      </div>
+      <div class="chat rv">
+        <div class="chat-head"><span class="av"></span><div><b>halo · digital twin</b><small>● online</small></div></div>
+        <div class="msgs" id="msgs"></div>
+        <div class="qs" id="qs"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <span class="mono">06 · Contact</span>
+      <h2 class="rv">Let's build an<br><em class="grad">agent</em> together.</h2>
+      <p class="rv">Reach out for collaborations, talks, content, or just to discuss an AI idea. I reply fastest on Instagram and LinkedIn.</p>
+      <div class="soc rv">
+        <a href="https://www.youtube.com/@halilbarimdev" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>YouTube <small>@halilbarimdev</small></a>
+        <a href="https://www.instagram.com/halilbarimdev" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.2.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9-.1-1.3-.1-1.6-.1-4.8s0-3.6.1-4.8C2.4 4 3.9 2.4 7.2 2.3c1.2-.1 1.6-.1 4.8-.1zM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7 1.2.1 1.6.1 4.9.1s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9z"/></svg>Instagram <small>@halilbarimdev</small></a>
+        <a href="https://www.linkedin.com/in/halilbarim" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.2 2.1 2.1 0 0 1 0 4.2zM7.1 20.5H3.6V9h3.5v11.5zM22.2 0H1.8C.8 0 0 .8 0 1.7v20.6c0 .9.8 1.7 1.8 1.7h20.4c1 0 1.8-.8 1.8-1.7V1.7C24 .8 23.2 0 22.2 0z"/></svg>LinkedIn <small>in/halilbarim</small></a>
+        <a href="https://github.com/halilbarim" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8 0 3.2.9.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3"/></svg>GitHub <small>halilbarim</small></a>
+        <a href="https://www.threads.net/@halilbarimdev" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M17.7 11.1l-.4-.2c-.2-3.2-2-5.1-5-5.1h-.1c-1.8 0-3.3.8-4.2 2.1l1.7 1.1c.7-1 1.7-1.2 2.5-1.2 1 0 1.8.3 2.3.9.4.4.6 1 .7 1.8-.8-.1-1.6-.2-2.5-.1-2.5.1-4.2 1.6-4 3.6.1 1 .6 1.9 1.4 2.4.7.5 1.6.7 2.6.6 1.3-.1 2.3-.5 3-1.4.5-.7.9-1.5 1-2.6.6.4 1.1.9 1.3 1.5.5 1 .5 2.7-.9 4.1-1.2 1.2-2.7 1.8-4.9 1.8-2.4 0-4.3-.8-5.5-2.3C5.5 16.7 5 14.7 4.9 12c0-2.7.6-4.7 1.8-6.1C7.9 4.5 9.8 3.7 12.2 3.7c2.4 0 4.3.8 5.6 2.3.6.8 1.1 1.7 1.4 2.8l2-.5c-.4-1.4-1-2.6-1.8-3.6C17.8 2.8 15.4 1.8 12.2 1.8 9 1.8 6.6 2.8 5 4.7 3.6 6.5 2.9 8.9 2.9 12c0 3.1.7 5.5 2.1 7.3 1.6 1.9 4 2.9 7.1 2.9 2.8 0 4.8-.7 6.4-2.3 2.1-2.1 2.1-4.7 1.4-6.3-.5-1.2-1.4-2.1-2.6-2.7zm-5.3 4.8c-1.1.1-2.2-.4-2.2-1.4 0-.8.6-1.6 2.3-1.7h.6c.6 0 1.2.1 1.7.2-.2 2.4-1.3 2.8-2.4 2.9z"/></svg>Threads <small>@halilbarimdev</small></a>
+        <a href="https://x.com/halilbarim" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M18.2 2.3h3.4l-7.4 8.4 8.7 11.5h-6.8l-5.3-7-6.1 7H1.3l7.9-9L.8 2.3h7l4.8 6.4 5.6-6.4zm-1.2 17.9h1.9L7 4.2H5l12 16z"/></svg>X <small>@halilbarim</small></a>
+        <a href="https://medium.com/@halilbarim" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M13.5 12a6.8 6.8 0 1 1-13.5 0 6.8 6.8 0 0 1 13.5 0zm7.4 0c0 3.5-1.5 6.4-3.4 6.4s-3.4-2.9-3.4-6.4 1.5-6.4 3.4-6.4 3.4 2.9 3.4 6.4zM24 12c0 3.2-.5 5.7-1.2 5.7s-1.2-2.5-1.2-5.7.5-5.7 1.2-5.7S24 8.8 24 12z"/></svg>Medium <small>@halilbarim</small></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Halil Barım</span>
+    <span>Built with agents, approved by a human.</span>
+    <button class="pill" id="pillBtn" title="You can also try typing 'matrix'"><i></i>Red pill</button>
+  </div>
+</footer>
+
+<div id="neo" aria-hidden="true">
+  <canvas id="neoRain"></canvas>
+  <div class="msg"><b>Wake up, Neo…<span class="k"></span></b><small>the agents are waiting · click to exit</small></div>
+</div>
+
+<script>
+(() => {
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = s => document.querySelector(s), $$ = s => [...document.querySelectorAll(s)];
+
+/* ================= ECLIPSE PARTICLE RING ================= */
+const cv = $('#eclipse'), ctx = cv.getContext('2d');
+let W, H, cx, cy, R, parts = [], mouse = {x:-9999, y:-9999}, t = 0;
+const stops = [[255,210,154],[255,138,76],[224,80,122],[169,139,255],[255,210,154]];
+function colAt(f){ // f 0..1 around ring
+  const p = f*(stops.length-1), i = Math.floor(p), k = p - i;
+  const a = stops[i], b = stops[Math.min(i+1, stops.length-1)];
+  return a.map((v,j) => Math.round(v + (b[j]-v)*k));
+}
+function build(){
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  W = cv.clientWidth; H = cv.clientHeight;
+  cv.width = W*dpr; cv.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
+  const mobile = W < 700;
+  cx = mobile ? W*.5 : W*.7; cy = mobile ? H*.34 : H*.42;
+  R = Math.min(W, H) * (mobile ? .34 : .3);
+  const N = mobile ? 900 : 1800;
+  parts = Array.from({length:N}, () => {
+    const a = Math.random()*Math.PI*2;
+    const spread = Math.pow(Math.random(), 2.2) * (Math.random() < .5 ? -1 : 1);
+    return {a, r: R + spread*R*.28, sp: (.0006 + Math.random()*.0016) * (Math.random() < .12 ? -1 : 1),
+      sz: Math.random()*1.6 + .3, ox:0, oy:0, ph: Math.random()*Math.PI*2, c: colAt(((a/(Math.PI*2))+1)%1)};
+  });
+}
+function draw(){
+  t += 1;
+  ctx.clearRect(0,0,W,H);
+  // corona glow
+  const g = ctx.createRadialGradient(cx,cy,R*.7,cx,cy,R*1.9);
+  g.addColorStop(0,'rgba(255,138,76,.22)'); g.addColorStop(.35,'rgba(224,80,122,.08)'); g.addColorStop(1,'rgba(8,7,12,0)');
+  ctx.fillStyle = g; ctx.fillRect(0,0,W,H);
+  ctx.globalCompositeOperation = 'lighter';
+  for (const p of parts){
+    p.a += p.sp;
+    const breathe = Math.sin(t*.01 + p.ph) * 4;
+    let x = cx + Math.cos(p.a)*(p.r + breathe), y = cy + Math.sin(p.a)*(p.r + breathe)*.96;
+    const dx = x - mouse.x, dy = y - mouse.y, d2 = dx*dx + dy*dy;
+    if (d2 < 16000){ const d = Math.sqrt(d2) || 1, f = (1 - d/126) * 26; p.ox += dx/d*f*.12; p.oy += dy/d*f*.12; }
+    p.ox *= .93; p.oy *= .93;
+    x += p.ox; y += p.oy;
+    // brighter on top-right arc, like light catching an eclipse
+    const lit = .35 + .65 * Math.max(0, Math.cos(p.a + 2.3));
+    ctx.fillStyle = `rgba(${p.c[0]},${p.c[1]},${p.c[2]},${.25 + lit*.75})`;
+    ctx.fillRect(x, y, p.sz, p.sz);
+  }
+  ctx.globalCompositeOperation = 'source-over';
+  // the moon
+  const m = ctx.createRadialGradient(cx - R*.2, cy - R*.2, 0, cx, cy, R*.9);
+  m.addColorStop(0,'#14111c'); m.addColorStop(1,'#08070c');
+  ctx.fillStyle = m; ctx.beginPath(); ctx.arc(cx, cy, R*.84, 0, Math.PI*2); ctx.fill();
+  // diamond-ring rim light, slowly drifting
+  const rimA = -0.75 + Math.sin(t*.004)*.35;
+  const rim = ctx.createLinearGradient(cx - R, cy + R, cx + R, cy - R);
+  rim.addColorStop(0,'rgba(169,139,255,0)'); rim.addColorStop(.55,'rgba(255,138,76,.55)'); rim.addColorStop(1,'rgba(255,230,190,1)');
+  ctx.save(); ctx.shadowColor = '#ffb36b'; ctx.shadowBlur = 30;
+  ctx.strokeStyle = rim; ctx.lineWidth = 2.2; ctx.beginPath(); ctx.arc(cx, cy, R*.84, rimA - 1.5, rimA + 1.1); ctx.stroke();
+  ctx.fillStyle = '#fff4e2'; ctx.shadowBlur = 40;
+  ctx.beginPath(); ctx.arc(cx + Math.cos(rimA)*R*.84, cy + Math.sin(rimA)*R*.84, 3.2, 0, Math.PI*2); ctx.fill();
+  ctx.restore();
+  if (!reduced) requestAnimationFrame(draw);
+}
+addEventListener('resize', build);
+addEventListener('pointermove', e => { const r = cv.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; });
+build(); draw();
+
+/* ================= HEADLINE WORD REVEAL ================= */
+const h1 = $('#headline');
+let wi = 0;
+[...h1.childNodes].forEach(node => {
+  if (node.nodeType === 3){
+    const frag = document.createDocumentFragment();
+    node.textContent.split(/(\s+)/).forEach(part => {
+      if (!part.trim()){ frag.appendChild(document.createTextNode(part)); return; }
+      const s = document.createElement('span'); s.className = 'w'; s.textContent = part; s.style.animationDelay = (.15 + wi++*.09)+'s'; frag.appendChild(s);
+    });
+    node.replaceWith(frag);
+  } else { node.classList.add('w'); node.style.animationDelay = (.15 + wi++*.09)+'s'; }
+});
+
+/* ================= MANIFESTO SCROLL HIGHLIGHT ================= */
+const man = $('#manifesto');
+man.innerHTML = man.textContent.split(/\s+/).map(w => {
+  const hl = /^\*.*\*[.,]?$/.test(w);
+  const clean = w.replace(/\*/g,'');
+  return `<span class="word${hl ? ' hl' : ''}">${clean}</span>`;
+}).join(' ');
+const words = $$('#manifesto .word');
+function manScroll(){
+  const r = man.getBoundingClientRect();
+  const p = Math.min(1, Math.max(0, (innerHeight*.85 - r.top) / (r.height + innerHeight*.35)));
+  const n = Math.floor(p * words.length * 1.05);
+  words.forEach((w,i) => w.classList.toggle('on', i < n));
+}
+addEventListener('scroll', manScroll, {passive:true}); manScroll();
+if (reduced) words.forEach(w => w.classList.add('on'));
+
+/* ================= HALO FLOW DIAGRAM ================= */
+const NS = 'http://www.w3.org/2000/svg';
+const fnodes = [
+  ['Claude Code','coding',250,58],['OpenCode','multi-model',418,150],['Hermes','telegram',418,350],
+  ['Telegram','mobile',250,442],['Halo Agent','in progress',82,350],['Vaults','work · personal',82,150]
+];
+const gp = $('#flowPaths'), gn = $('#flowNodes');
+fnodes.forEach(([n,s,x,y],i) => {
+  const path = document.createElementNS(NS,'path');
+  path.setAttribute('d', `M250,250 L${x},${y}`); path.setAttribute('class','path'); path.id = 'fp'+i;
+  gp.appendChild(path);
+  if (!reduced){
+    const c = document.createElementNS(NS,'circle'); c.setAttribute('r','2.5'); c.setAttribute('class','dot');
+    c.innerHTML = `<animateMotion dur="${2+i*.25}s" repeatCount="indefinite" ${i%2?'keyPoints="1;0" keyTimes="0;1" calcMode="linear"':''}><mpath href="#fp${i}"/></animateMotion>`;
+    gp.appendChild(c);
+  }
+  const g = document.createElementNS(NS,'g');
+  g.innerHTML = `<rect class="n-bg" x="${x-62}" y="${y-24}" width="124" height="48" rx="24"/><text x="${x}" y="${y-1}">${n}</text><text class="s" x="${x}" y="${y+14}">${s}</text>`;
+  gn.appendChild(g);
+});
+
+/* ================= VIDEOS ================= */
+const vids = [
+  ['Lo_SLODgckU','AI Agent Skills Nedir ve Nasıl Çalışır? Pratik Örnekle 20 Dakikada Anla','6.5K','20:30',true],
+  ['gZC8OOCcg0s','En İyi Vibe Coding Setup: Claude Code + GLM-4.7 ile Vibe Stack Docker','5.8K','26:20'],
+  ['BEkHlTcq8xo','Tüm Yapay Zekalarım Aynı Hafızada: Claude MCP ile Evde İkinci Beyin','2.8K','37:53'],
+  ['Xvg6ZdaGJmA','Google Antigravity Skills + Claude Skills: Ayarlar & Kullanım Rehberi','3.4K','34:55'],
+  ['NhpUBQScZ9I','Gemini Gems ile Kendi Agent Skill\'lerini Oluştur: 2026 Tam Rehber','2.3K','18:16'],
+  ['gHJvguiYSMw','Claude Code Kullanımı: Sıfırdan Başlasam İlk Kuracağım 5 Şey','yeni','22:19'],
+];
+$('#vids').innerHTML = vids.map(([id,t,v,d,big]) => `
+  <a class="vid rv${big?' big':''}" href="https://www.youtube.com/watch?v=${id}" target="_blank" rel="noopener">
+    <div class="th"><img loading="lazy" src="https://i.ytimg.com/vi/${id}/${big?'maxresdefault':'hqdefault'}.jpg" alt="${t.replace(/"/g,'&quot;')}" onerror="this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg'"><div class="play"><span>▶</span></div><span class="dur">${d}</span></div>
+    <div class="bd"><h4 lang="tr">${t}</h4><div class="st"><span>YouTube · TR</span><b>${v === 'yeni' ? 'new video' : v + ' views'}</b></div></div>
+  </a>`).join('');
+
+/* ================= ASK THE AGENT ================= */
+const qa = [
+  ['What does Halil do?', 'By day he\'s a frontend developer. The rest of the time he <b>builds AI agents and teaches how they work</b>: agent architecture, MCP, Claude Code, automation. These days his agents write most of the code while he leads them.', 'search_memory("career")'],
+  ['What is Halo?', 'Me! 👋 I\'m Halil\'s second brain, running on a mini PC in his home. I work as an MCP server; Claude Code, OpenCode and Hermes connect to me and share the same memory. Not a single port is open to the outside, and the data never leaves the house.', 'get_context("halo architecture")'],
+  ['Where should I start?', 'His channel is in Turkish, so turn on auto-translated subtitles. Start with <a href="https://www.youtube.com/watch?v=Lo_SLODgckU" target="_blank" rel="noopener">What Are AI Agent Skills?</a>, the most-watched video, then continue with <a href="https://www.youtube.com/watch?v=gHJvguiYSMw" target="_blank" rel="noopener">the first 5 things to set up in Claude Code</a>.', 'recommend(level="beginner")'],
+  ['Which tools does he use?', 'Claude Code (the main agent), OpenCode, agent skills, MCP, Vibe-Kanban, Docker and a mini PC at home. On the frontend: React, React Native and TypeScript.', 'list_tools()'],
+  ['How can I work with him?', 'For collaborations, training, talks or content, message him on <a href="https://www.instagram.com/halilbarimdev" target="_blank" rel="noopener">Instagram</a> or <a href="https://www.linkedin.com/in/halilbarim" target="_blank" rel="noopener">LinkedIn</a>. He reads your message himself, not me. For now. 😉', 'route("contact")'],
+];
+const msgs = $('#msgs'), qs = $('#qs');
+const push = (html, who) => { const d = document.createElement('div'); d.className = 'm ' + who; d.innerHTML = html; msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight; return d; };
+push('Hi! I\'m Halo, Halil\'s digital twin. What would you like to know about him?', 'bot');
+let busy = false;
+function ask(i, btn){
+  if (busy) return; busy = true;
+  const [q, a, tool] = qa[i];
+  btn.disabled = true;
+  push(q, 'me');
+  setTimeout(() => {
+    const b = push('<span class="typing"><i></i><i></i><i></i></span>', 'bot');
+    setTimeout(() => {
+      b.innerHTML = `<span class="tool">⚙ ${tool}</span>`;
+      const span = document.createElement('span'); b.appendChild(span);
+      // stream text, keep HTML tags intact
+      const tokens = a.match(/<[^>]+>|[^<]/g); let k = 0, acc = '';
+      const iv = setInterval(() => {
+        for (let s = 0; s < 3 && k < tokens.length; s++) acc += tokens[k++];
+        span.innerHTML = acc; msgs.scrollTop = msgs.scrollHeight;
+        if (k >= tokens.length){ clearInterval(iv); busy = false; }
+      }, 16);
+    }, 700);
+  }, 300);
+}
+qa.forEach(([q],i) => { const b = document.createElement('button'); b.textContent = q; b.onclick = () => ask(i, b); qs.appendChild(b); });
+
+/* ================= REVEAL + COUNTERS ================= */
+const io = new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.classList.add('in');
+  e.target.querySelectorAll('[data-to]').forEach(count);
+  io.unobserve(e.target);
+}), {threshold:.12});
+$$('.rv').forEach((el,i) => { el.style.transitionDelay = (el.closest('.team') ? (i%5)*.08 : 0)+'s'; io.observe(el); });
+function count(el){
+  const to = +el.dataset.to, dec = +(el.dataset.dec || 0), sup = el.querySelector('sup');
+  const supHTML = sup ? sup.outerHTML : '';
+  const t0 = performance.now(), dur = 1600;
+  (function step(now){
+    const p = Math.min(1, (now - t0)/dur), e = 1 - Math.pow(1-p, 4);
+    el.innerHTML = (to*e).toFixed(dec) + supHTML;
+    if (p < 1) requestAnimationFrame(step);
+  })(t0);
+}
+
+/* ================= SELF-RUNNING PIPELINE ================= */
+const COLS = [
+  {k:'Task', who:'inbox'},
+  {k:'Plan', who:'Halo Brain', agentic:true},
+  {k:'Code', who:'Claude Code', agentic:true},
+  {k:'Review', who:'Halil · human', human:true},
+  {k:'Shipped', who:'done'},
+];
+const TASKS = [
+  'Add a new vault to Halo','Calendar app with Claude Code','Update the memory-bank skill','Demo for the embeddings video',
+  '/summary command for Telegram','Short script: AGENTS.md','Rebuild the vibe-stack Docker image','Reindex for semantic search',
+];
+const STATUS = ['queued','planned','coding','in review','shipped'];
+const LOGS = {
+  0:t=>`new task queued: "${t}"`,
+  1:t=>`halo-brain → pulled context from memory for "${t}", plan written`,
+  2:t=>`claude-code → coding "${t}" · tests passed`,
+  3:t=>`human-in-the-loop → Halil is reviewing "${t}"`,
+  4:t=>`✓ "${t}" shipped`,
+};
+const pipe = $('#pipe');
+pipe.innerHTML = COLS.map(c => `<div class="col${c.human?' human':''}${c.agentic?' agentic':''}"><div class="col-h"><b>${c.k}</b><span class="who"><i></i>${c.who}</span></div><div class="list"></div></div>`).join('');
+const lists = $$('#pipe .list');
+const tstate = TASKS.map((t,i) => ({t, id:i, col: i < 3 ? 0 : i < 5 ? 1 : i < 6 ? 2 : i < 7 ? 3 : 4}));
+const tcard = s => {
+  const d = document.createElement('div');
+  d.className = 'tcard' + (s.col === 4 ? ' done' : ''); d.dataset.id = s.id;
+  d.innerHTML = `${s.t}<div class="prog"><i style="width:${s.col*25}%"></i></div><div class="meta"><span>T-${s.id+101}</span><span>${STATUS[s.col]}</span></div>`;
+  return d;
+};
+tstate.forEach(s => lists[s.col].appendChild(tcard(s)));
+function moveTask(s, to){
+  const el = pipe.querySelector(`.tcard[data-id="${s.id}"]`), first = el.getBoundingClientRect();
+  s.col = to;
+  const ne = tcard(s); el.remove();
+  to === 0 ? lists[0].appendChild(ne) : lists[to].prepend(ne);
+  const last = ne.getBoundingClientRect();
+  if (!reduced){
+    ne.classList.add('moving');
+    ne.animate([{transform:`translate(${first.left-last.left}px,${first.top-last.top}px) rotate(-2deg)`},{transform:'none'}],
+      {duration:700, easing:'cubic-bezier(.2,.8,.2,1)'}).onfinish = () => ne.classList.remove('moving');
+  }
+  $('#plog').textContent = LOGS[to](s.t);
+}
+function pipeStep(){
+  const done = tstate.filter(s => s.col === 4);
+  if (done.length > 2) return moveTask(done[0], 0);
+  const movable = tstate.filter(s => s.col < 4).sort((a,b) => b.col - a.col);
+  const s = movable[Math.floor(Math.random()*Math.min(3, movable.length))];
+  moveTask(s, s.col + 1);
+}
+let pipeTimer = null;
+new IntersectionObserver((es, ob) => es.forEach(e => {
+  if (!e.isIntersecting || pipeTimer || reduced) return;
+  pipeStep(); pipeTimer = setInterval(pipeStep, 1800); ob.disconnect();
+}), {threshold:.25}).observe(pipe);
+
+/* ================= HIDDEN MATRIX MODE ================= */
+const neo = $('#neo'), ncv = $('#neoRain'), nctx = ncv.getContext('2d');
+const glyphs = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワン0123456789ĞÜŞİÖÇ';
+const neoWords = ['AGENT','MCP','HALO','CLAUDE','SKILL'];
+let neoOn = false, drops = [], ncols = 0, nsize = 16;
+function neoStart(){
+  if (neoOn) return; neoOn = true;
+  const dpr = Math.min(devicePixelRatio || 1, 2), w = innerWidth, h = innerHeight;
+  ncv.width = w*dpr; ncv.height = h*dpr; nctx.setTransform(dpr,0,0,dpr,0,0);
+  nctx.fillStyle = '#020604'; nctx.fillRect(0,0,w,h);
+  nsize = w < 640 ? 14 : 16; ncols = Math.ceil(w/nsize);
+  drops = Array.from({length:ncols}, () => ({y: Math.random()*-40, sp:.4+Math.random()*.8, word: Math.random() < .1 ? neoWords[Math.random()*neoWords.length|0] : null, wi:0}));
+  neo.classList.add('on'); neo.setAttribute('aria-hidden','false');
+  const t0 = performance.now();
+  (function rain(now){
+    nctx.fillStyle = 'rgba(2,6,4,.08)'; nctx.fillRect(0,0,w,h);
+    nctx.font = `${nsize}px JetBrains Mono, monospace`;
+    drops.forEach((d,i) => {
+      const fy = Math.floor(d.y), wordCh = d.word && d.wi < d.word.length;
+      nctx.fillStyle = wordCh ? '#c8ffe4' : (Math.random() < .05 ? '#d6ffe9' : '#00d475');
+      nctx.fillText(wordCh ? d.word[d.wi] : glyphs[Math.random()*glyphs.length|0], i*nsize, fy*nsize);
+      d.y += d.sp; if (Math.floor(d.y) !== fy && d.word) d.wi++;
+      if (fy*nsize > h && Math.random() > .97) Object.assign(d, {y:0, wi:0});
+    });
+    if (now - t0 < 6500 && neoOn) requestAnimationFrame(rain); else neoStop();
+  })(t0);
+}
+function neoStop(){ neoOn = false; neo.classList.remove('on'); neo.setAttribute('aria-hidden','true'); }
+neo.addEventListener('click', neoStop);
+let keyBuf = '';
+addEventListener('keydown', e => {
+  if (e.key === 'Escape') return neoStop();
+  if (e.key.length !== 1) return;
+  keyBuf = (keyBuf + e.key.toLowerCase()).slice(-6);
+  if (keyBuf === 'matrix'){ keyBuf = ''; neoStart(); }
+});
+$('#pillBtn').addEventListener('click', neoStart);
+$$('[data-lang]').forEach(a => a.addEventListener('click', () => { try { localStorage.setItem('hb-lang', a.dataset.lang); } catch (e) {} }));
+
+/* agent cards: follow-the-light */
+$$('.agent').forEach(a => a.addEventListener('pointermove', e => {
+  const r = a.getBoundingClientRect(), g = a.querySelector('.glow');
+  g.style.left = (e.clientX - r.left - 130)+'px'; g.style.top = (e.clientY - r.top - 130)+'px'; g.style.right = 'auto';
+}));
+})();
+</script>
+</body>
+</html>

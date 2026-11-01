@@ -9,11 +9,25 @@
 <meta name="robots" content="index, follow, max-image-preview:large">
 <meta name="theme-color" content="#08070c">
 <link rel="canonical" href="https://halilbarim.github.io/">
+<link rel="alternate" hreflang="tr" href="https://halilbarim.github.io/">
+<link rel="alternate" hreflang="en" href="https://halilbarim.github.io/en/">
+<link rel="alternate" hreflang="x-default" href="https://halilbarim.github.io/">
+<script>
+/* language routing: non-Turkish browsers go to /en/ once; an explicit choice wins; crawlers are never redirected */
+(function(){
+  if (/bot|crawl|spider|slurp|facebookexternalhit|embedly|preview|lighthouse/i.test(navigator.userAgent)) return;
+  var pick = null; try { pick = localStorage.getItem('hb-lang'); } catch (e) {}
+  var langs = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'tr'];
+  var tr = langs.some(function(l){ return /^tr\b/i.test(l); });
+  if (pick === 'en' || (!pick && !tr)) location.replace('en/' + location.hash);
+})();
+</script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta property="og:type" content="profile">
 <meta property="og:site_name" content="Halil Barım">
 <meta property="og:locale" content="tr_TR">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:url" content="https://halilbarim.github.io/">
 <meta property="og:title" content="Halil Barım — Yapay Zeka Ajanları, MCP ve Claude Code">
 <meta property="og:description" content="Ajanlara iş, yapay zekaya hafıza veriyorum. AI agent'lar, MCP ve Claude Code üzerine içerikler.">
@@ -89,6 +103,8 @@ nav .me i{width:26px;height:26px;border-radius:50%;background:radial-gradient(ci
 @keyframes rot{to{transform:rotate(360deg)}}
 nav a.l{font-size:13px;color:var(--muted);padding:8px 14px;border-radius:99px;transition:.25s}
 nav a.l:hover{color:var(--text);background:var(--card-hi)}
+nav a.lang{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted);padding:7px 11px;border:1px solid var(--line);border-radius:99px;margin-right:2px;transition:.25s}
+nav a.lang:hover{color:var(--text);border-color:var(--line-hi)}
 nav a.cta{font-size:13px;font-weight:600;background:var(--text);color:var(--ink);padding:9px 18px;border-radius:99px;transition:.25s}
 nav a.cta:hover{background:var(--amber)}
 
@@ -339,6 +355,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
   <a class="l" href="#halo">Halo</a>
   <a class="l" href="#work">Projeler</a>
   <a class="l" href="#videos">Videolar</a>
+  <a class="lang" href="en/" hreflang="en" lang="en" title="English" data-lang="en">EN</a>
   <a class="cta" href="#contact">İletişim</a>
 </nav>
 
@@ -855,6 +872,7 @@ addEventListener('keydown', e => {
   if (keyBuf === 'matrix'){ keyBuf = ''; neoStart(); }
 });
 $('#pillBtn').addEventListener('click', neoStart);
+$$('[data-lang]').forEach(a => a.addEventListener('click', () => { try { localStorage.setItem('hb-lang', a.dataset.lang); } catch (e) {} }));
 
 /* agent cards: follow-the-light */
 $$('.agent').forEach(a => a.addEventListener('pointermove', e => {
